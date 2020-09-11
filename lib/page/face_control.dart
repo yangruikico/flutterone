@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:popup_window/popup_window.dart';
 
 class FaceControl extends StatefulWidget {
   @override
@@ -113,14 +114,19 @@ class _FaceControlState extends State<FaceControl> {
 //                indicator: BoxDecoration(),//用于设定选中状态下的展示样式
                   tabs: List.generate(tabs.length, (index) => tabs[index])),
 
-              leading: IconButton(
-                  icon: Icon(
-                    Icons.sort,
+              leading:PopupWindowButton(
+                offset: Offset(0, 500),
+                child: Icon(Icons.sort),
+                window: Container(
+                  padding: EdgeInsets.all(50),
+                  color: Color.fromARGB(10, 146, 147, 151),
+                  height: 150,
+                  child: Container(
                     color: Colors.white,
-                  ),
-                  onPressed: () {
-                    print('add click....');
-                  }),
+                    height: 50,
+                  ) ,
+                ),
+              ),
             ),
             body: TabBarView(
               children: tabs
