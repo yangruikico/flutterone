@@ -89,76 +89,80 @@ class _FaceControlState extends State<FaceControl> {
           body: TabBarView(
             children: tabs
                 .map((e) => ListView.builder(
-                itemBuilder: (context, int) => Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: <BoxShadow>[
-                        BoxShadow(
-                          color: Colors.grey[300],
-                        ),
-                      ]),
-                  height: 85,
-                  child: Flex(
-                    direction: Axis.horizontal,
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Container(
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: Colors.pink, width: 1.0),
-                                borderRadius:
-                                BorderRadius.circular(60)),
-                            child: ClipOval(
-                              child: Image.network(
-                                'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1598959319835&di=cb0ec0e548ae2e0cc6e328644ef61c40&imgtype=0&src=http%3A%2F%2Ft8.baidu.com%2Fit%2Fu%3D3571592872%2C3353494284%26fm%3D79%26app%3D86%26f%3DJPEG%3Fw%3D1200%26h%3D1290',
-                                width: 60,
-                                height: 60,
-                                fit: BoxFit.fitWidth,
-                              ),
-                            )),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Padding(
-                          padding: EdgeInsets.only(top: 17, bottom: 17),
-                          child: Container(
-                            child: Column(
-                              crossAxisAlignment:
-                              CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Expanded(
-                                  flex: 1,
-                                  child: Text('汉口火车站重点防控人员',
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.black)),
-                                ),
-                                Expanded(
-                                  flex: 1,
-                                  child: Text(
-                                    "汉口火车站重点防控人员,在军运会期间严格检查人员的身份",
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.grey),
+                itemBuilder: (context, int) => Column(
+                  children: <Widget>[
+                    Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          boxShadow: <BoxShadow>[
+                            BoxShadow(
+                              color: Colors.grey[300],
+                            ),
+                          ]),
+                      height: 85,
+                      child: Flex(
+                        direction: Axis.horizontal,
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.all(10),
+                            child: Container(
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: Colors.pink, width: 1.0),
+                                    borderRadius:
+                                    BorderRadius.circular(60)),
+                                child: ClipOval(
+                                  child: Image.network(
+                                    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1598959319835&di=cb0ec0e548ae2e0cc6e328644ef61c40&imgtype=0&src=http%3A%2F%2Ft8.baidu.com%2Fit%2Fu%3D3571592872%2C3353494284%26fm%3D79%26app%3D86%26f%3DJPEG%3Fw%3D1200%26h%3D1290',
+                                    width: 60,
+                                    height: 60,
+                                    fit: BoxFit.fitWidth,
                                   ),
+                                )),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Padding(
+                              padding: EdgeInsets.only(top: 17, bottom: 17),
+                              child: Container(
+                                child: Column(
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Expanded(
+                                      flex: 1,
+                                      child: Text('汉口火车站重点防控人员',
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.black)),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: Text(
+                                        "汉口火车站重点防控人员,在军运会期间严格检查人员的身份",
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.grey),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
+                              ),
                             ),
                           ),
-                        ),
+                          Padding(
+                            padding: EdgeInsets.all(10),
+                            child: Expanded(
+                              flex: 1,
+                              child: Text('03-01'),
+                            ),
+                          ),
+                        ],
                       ),
-                      Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Expanded(
-                          flex: 1,
-                          child: Text('03-01'),
-                        ),
-                      ),
-                    ],
-                  ),
+                    )
+                  ],
                 ), //Text('${int}')
                 itemCount: (20)))
                 .toList(),
