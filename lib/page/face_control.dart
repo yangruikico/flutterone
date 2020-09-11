@@ -23,6 +23,7 @@ class _FaceControlState extends State<FaceControl> {
     //
     return MaterialApp(
       home: Scaffold(
+        backgroundColor: Colors.blue,
         appBar: AppBar(
           primary: true,
           //为false的时候会影响leading，actions、titile组件，导致向上偏移
@@ -33,7 +34,7 @@ class _FaceControlState extends State<FaceControl> {
           //设置导航右边图标的主题色，此时iconTheme对于右边图标颜色会失效
           iconTheme: IconThemeData(color: Colors.white, opacity: 1),
           //设置AppBar上面Icon的主题颜色
-          brightness: Brightness.dark,
+          brightness: Brightness.light,
           //设置导航条上面的状态栏显示字体颜色
           backgroundColor: Colors.blue,
           elevation: 0,
@@ -68,6 +69,7 @@ class _FaceControlState extends State<FaceControl> {
         body: DefaultTabController(
           length: tabs.length,
           child: Scaffold(
+
             appBar: AppBar(
               primary: true,
               //为false的时候会影响leading，actions、titile组件，导致向上偏移
@@ -125,6 +127,8 @@ class _FaceControlState extends State<FaceControl> {
                   .map((e) => ListView.builder(
                       itemBuilder: (context, int) => Column(
                             children: <Widget>[
+
+
                               Container(
                                 decoration: BoxDecoration(
                                     color: Colors.white,
@@ -199,6 +203,8 @@ class _FaceControlState extends State<FaceControl> {
                                   ],
                                 ),
                               )
+
+
                             ],
                           ), //Text('${int}')
                       itemCount: (20)))
@@ -221,10 +227,10 @@ _statusBar() {
   SystemUiOverlayStyle uiOverlayStyle = SystemUiOverlayStyle(
     systemNavigationBarColor: Color(0xFF000000),
     systemNavigationBarDividerColor: null,
-    statusBarColor: Colors.transparent,
+    statusBarColor: null,
     systemNavigationBarIconBrightness: Brightness.light,
-    statusBarIconBrightness: Brightness.dark,
-    statusBarBrightness: Brightness.light,
+    statusBarIconBrightness: Brightness.light,
+    statusBarBrightness: Brightness.dark,
   );
 
   SystemChrome.setSystemUIOverlayStyle(uiOverlayStyle);
