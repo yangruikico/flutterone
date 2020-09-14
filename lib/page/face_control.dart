@@ -1,3 +1,8 @@
+import 'package:TATO/config/theme_color.dart';
+import 'package:TATO/generated/MyContent.dart';
+import 'package:TATO/moudle/face_label.dart';
+import 'package:TATO/view/select/select_group.dart';
+import 'package:TATO/view/select/select_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,9 +24,14 @@ class _FaceControlState extends State<FaceControl> {
     ),
   ];
 
+  List<FaceLabel> tabLabel = [
+    FaceLabel()
+      ..labelName = '全部'
+      ..isCheck = false
+  ];
+
   @override
   Widget build(BuildContext context) {
-    //
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.blue,
@@ -70,7 +80,6 @@ class _FaceControlState extends State<FaceControl> {
         body: DefaultTabController(
           length: tabs.length,
           child: Scaffold(
-
             appBar: AppBar(
               primary: true,
               //为false的时候会影响leading，actions、titile组件，导致向上偏移
@@ -114,17 +123,25 @@ class _FaceControlState extends State<FaceControl> {
 //                indicator: BoxDecoration(),//用于设定选中状态下的展示样式
                   tabs: List.generate(tabs.length, (index) => tabs[index])),
 
-              leading:PopupWindowButton(
-                offset: Offset(0, 500),
+              leading: PopupWindowButton(
+                offset: Offset(0, 200),
                 child: Icon(Icons.sort),
                 window: Container(
-                  padding: EdgeInsets.all(50),
+                  padding:
+                      EdgeInsets.only(left: 10, right: 10, top: 20, bottom: 20),
                   color: Color.fromARGB(10, 146, 147, 151),
-                  height: 150,
-                  child: Container(
-                    color: Colors.white,
-                    height: 50,
-                  ) ,
+                  height: 80,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.max,
+                    //交叉轴的布局方式，对于column来说就是水平方向的布局方式
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    //就是字child的垂直布局方向，向上还是向下
+                    verticalDirection: VerticalDirection.down,
+                    children: tabLabel.map((item) {
+                      return _item(item);
+                    }).toList(),
+                  ),
                 ),
               ),
             ),
@@ -133,8 +150,6 @@ class _FaceControlState extends State<FaceControl> {
                   .map((e) => ListView.builder(
                       itemBuilder: (context, int) => Column(
                             children: <Widget>[
-
-
                               Container(
                                 decoration: BoxDecoration(
                                     color: Colors.white,
@@ -209,8 +224,6 @@ class _FaceControlState extends State<FaceControl> {
                                   ],
                                 ),
                               )
-
-
                             ],
                           ), //Text('${int}')
                       itemCount: (20)))
@@ -227,6 +240,29 @@ class _FaceControlState extends State<FaceControl> {
     _statusBar();
     super.initState();
   }
+}
+
+Widget _item(FaceLabel item) {
+  return Container(
+    child: Expanded(
+      flex: 1,
+      child: Padding(
+        padding: EdgeInsets.only(left: 5, right: 5),
+        child: Container(
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.rectangle,
+              border: Border.all(color: Colors.blue, width: 1.0),
+              borderRadius: BorderRadius.circular(4)),
+          child: Text(
+            '全部',
+            style: TextStyle(color: Colors.blue),
+          ),
+        ),
+      ),
+    ),
+  );
 }
 
 _statusBar() {
