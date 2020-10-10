@@ -2,10 +2,10 @@ import 'package:TATO/moudle/entity/user_entity.dart';
 import 'package:flutter/cupertino.dart';
 
 class UserInfoProvide with ChangeNotifier {
- /* UserEntity userEntity;
+
+  UserEntity userEntity;
 
 
-  UserInfoProvide(this.userEntity);
 
   updateUserInfo({String username, String password}) {
     if (userEntity == null) {
@@ -21,17 +21,6 @@ class UserInfoProvide with ChangeNotifier {
     notifyListeners();
   }
 
-  get getUser => userEntity; //3*/
+  get getUser => userEntity; //3
 
-
-  int _count;
-
-  UserInfoProvide(this._count);
-
-  void add() {
-    _count++;
-    notifyListeners();
-  }
-
-  get count => _count;
 }

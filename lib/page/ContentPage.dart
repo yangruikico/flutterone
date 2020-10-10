@@ -1,3 +1,5 @@
+import 'package:TATO/page/profile/profile_page.dart';
+
 import 'card_free.dart';
 import 'card_share.dart';
 import 'card_special.dart';
@@ -55,7 +57,7 @@ class _ContentPageState extends State<ContentPage> {
                 _warpItem(CardRecommend()),
                 _warpItem(CardShare()),
                 _warpItem(CardFree()),
-                _warpItem(CardSpecial()),//ListPage(items: new List<String>.generate(100, (index) => "item$index") )
+                _warpItem(ProfilePage()),//ListPage(items: new List<String>.generate(100, (index) => "item$index") )
               ],
             )),
       ],

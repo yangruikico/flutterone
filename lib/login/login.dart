@@ -1,3 +1,7 @@
+import 'dart:convert';
+import 'dart:math';
+
+import 'package:TATO/config/flag_key.dart';
 import 'package:TATO/moudle/entity/notice_entity.dart';
 import 'package:TATO/moudle/entity/user_entity.dart';
 import 'package:TATO/moudle/form/user.dart';
@@ -7,6 +11,7 @@ import 'package:TATO/services/register.dart';
 import 'package:TATO/user_info_provide.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends BaseWidget {
   @override
@@ -33,7 +38,7 @@ class _BodyState extends BaseWidgetState {
     super.dispose();
   }
 
-  void _submit() {
+  void _submit() async{
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
       //请求网络,onSuccess:(UserEntity userEntity){
@@ -45,16 +50,13 @@ class _BodyState extends BaseWidgetState {
           onSuccess: (UserEntity userEntity) {},
           onFailed: (NoticeEntity noticeEntity) {});*/
 
-      /*Provide.value<UserInfoProvide>(context)
-          .updateUserInfo(username: _form.username, password: _form.password);*/
 
-      //Provider.of<UserInfoProvide>(context).updateUserInfo(username: _form.username, password: _form.password);
-      Provider.of<UserInfoProvide>(context).add();
-      Navigator.push( context,
-          MaterialPageRoute(builder: (context) {
-            return HomePage();
-          }));
+      saveUser(UserEntity(username: _form.username, password: _form.password));
+
+
     }
+
+
 
 
     /* showModalBottomSheet(
@@ -66,6 +68,46 @@ class _BodyState extends BaseWidgetState {
          );
        });*/
   }
+
+
+  Future<void>  saveUser(UserEntity userEntity) async {
+
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+
+
+
+    String user  = _prefs.getString(FlagKey.USER);
+    var bool = _prefs.getBool(FlagKey.ISLOGIN);
+    if (bool!=null&&bool) {
+
+      Map map =json.decode(user);
+
+      UserEntity mUserEntity=UserEntity.fromMap(map);
+
+      Provider.of<UserInfoProvide>(context, listen: false).userEntity =
+          mUserEntity;
+
+
+      print("yangrui::${mUserEntity.username}");
+
+    }else{
+
+
+      Provider.of<UserInfoProvide>(context,listen: false).updateUserInfo(username: _form.username, password: _form.password.toString());
+
+      _prefs.setBool(FlagKey.ISLOGIN, true);
+
+      _prefs.setString(FlagKey.USER, json.encode(userEntity.toJson())).then((value) {
+        /*Navigator.push( context,
+            MaterialPageRoute(builder: (context) {
+              return HomePage();
+            }));*/
+      });
+
+    }
+
+  }
+
 
   @override
   body() {

@@ -6,6 +6,8 @@ class UserEntity {
   String username;
   String password;
 
+  UserEntity({this.username, this.password});
+
   static UserEntity fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
     UserEntity userBean = UserEntity();

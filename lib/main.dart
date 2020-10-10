@@ -1,7 +1,12 @@
+import 'dart:convert';
+
+import 'package:TATO/config/flag_key.dart';
 import 'package:TATO/page/device_uuid_util.dart';
+import 'package:TATO/page/home.dart';
 import 'package:TATO/user_info_provide.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'login/login.dart';
 import 'moudle/entity/user_entity.dart';
 
@@ -16,7 +21,8 @@ import 'moudle/entity/user_entity.dart';
 }*/
 
 main() {
-  runApp(ChangeNotifierProvider<UserInfoProvide>.value(value: UserInfoProvide(1),
+  runApp(ChangeNotifierProvider<UserInfoProvide>.value(
+    value: UserInfoProvide(),
     child: MyApp(),
   ));
 }
@@ -59,6 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     //开启倒计时
+    initUser();
     countDown();
   }
 
@@ -73,16 +80,21 @@ class _MyHomePageState extends State<MyHomePage> {
     new Future.delayed(duration, goToHomePage);
   }
 
-  void goToHomePage() {
-    Navigator.pushAndRemoveUntil(
-      context,
-      new MaterialPageRoute(builder: (context) => new LoginPage()),
-      (route) => route == null,
-    );
-    /* Navigator.push( context,
-        MaterialPageRoute(builder: (context) {
-          return HomePage();
-        }));*/
+  void goToHomePage() async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    var bool = _prefs.getBool(FlagKey.ISLOGIN);
+    if (bool!=null&&bool) {//bool!=null&&bool
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return HomePage();
+      }));
+    } else {
+
+      Navigator.pushAndRemoveUntil(
+        context,
+        new MaterialPageRoute(builder: (context) => new LoginPage()),
+            (route) => route == null,
+      );
+    }
   }
 
   @override
@@ -125,4 +137,20 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+
+
+  void initUser() async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    String user  = _prefs.getString(FlagKey.USER);
+    var bool = _prefs.getBool(FlagKey.ISLOGIN);
+    if (bool!=null&&bool) {
+      UserEntity mUserEntity=UserEntity.fromMap(json.decode(user));
+      Provider.of<UserInfoProvide>(context, listen: false).userEntity = mUserEntity;
+      print("yangrui::${mUserEntity.username}");
+    }
+
+
+
+    }
+
 }
