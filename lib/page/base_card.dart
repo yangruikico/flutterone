@@ -19,8 +19,11 @@ class BaseCardState extends State<BaseCard> {
         children: <Widget>[
           CustomAppbar(),
           Expanded(
-            child: Container(
-              color: Colors.white,
+            child:Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.white,
+              ),
               child: Column(
                 children: <Widget>[
                   topContent(),
@@ -31,23 +34,7 @@ class BaseCardState extends State<BaseCard> {
           )
         ],
       ),
-    ) /*PhysicalModel(
-      color: Colors.transparent,
-      borderRadius: BorderRadius.circular(6),
-      clipBehavior: Clip.antiAlias,
-      child: Container(
-        decoration: BoxDecoration(color: Colors.white),
-        child: Column(
-          children: <Widget>[
-            CustomAppbar(),
-            topContent(),
-            bottomContent(),
-
-          ],
-        ),
-      ),
-    )*/
-        ;
+    );
   }
 
   topContent() {

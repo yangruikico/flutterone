@@ -57,9 +57,16 @@ class _ContentPageState extends State<ContentPage> {
               onPageChanged: widget.onPageChange,
               controller: _pageController,
               children: <Widget>[
-                _warpItem(CardRecommend()),
-                _warpItem(CardShare()),
-                _warpItem(CardFree()),
+                _warpItem(Padding(
+                  padding: EdgeInsets.only(left: 15,top: 20,right: 15,bottom: 20),
+                  child: CardRecommend(),
+                )),  _warpItem(Padding(
+                  padding: EdgeInsets.only(left: 15,top: 20,right: 15,bottom: 20),
+                  child: CardShare(),
+                )),  _warpItem(Padding(
+                  padding: EdgeInsets.only(left: 15,top: 20,right: 15,bottom: 20),
+                  child: CardFree(),
+                )),
                 _warpItem(ProfilePage()),//ListPage(items: new List<String>.generate(100, (index) => "item$index") )
               ],
             )),
@@ -68,10 +75,7 @@ class _ContentPageState extends State<ContentPage> {
   }
 
   Widget _warpItem(Widget widget) {
-    return Padding(
-      padding: EdgeInsets.only(left: 15,top: 20,right: 15,bottom: 20),
-      child:widget,
-    );
+    return widget;
   }
 
   _statusBar() {
