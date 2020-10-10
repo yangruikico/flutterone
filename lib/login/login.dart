@@ -74,37 +74,18 @@ class _BodyState extends BaseWidgetState {
 
     SharedPreferences _prefs = await SharedPreferences.getInstance();
 
+    Provider.of<UserInfoProvide>(context,listen: false).updateUserInfo(username: _form.username, password: _form.password.toString());
 
+    _prefs.setBool(FlagKey.ISLOGIN, true);
 
-    String user  = _prefs.getString(FlagKey.USER);
-    var bool = _prefs.getBool(FlagKey.ISLOGIN);
-    if (bool!=null&&bool) {
-
-      Map map =json.decode(user);
-
-      UserEntity mUserEntity=UserEntity.fromMap(map);
-
-      Provider.of<UserInfoProvide>(context, listen: false).userEntity =
-          mUserEntity;
-
-
-      print("yangrui::${mUserEntity.username}");
-
-    }else{
-
-
-      Provider.of<UserInfoProvide>(context,listen: false).updateUserInfo(username: _form.username, password: _form.password.toString());
-
-      _prefs.setBool(FlagKey.ISLOGIN, true);
-
-      _prefs.setString(FlagKey.USER, json.encode(userEntity.toJson())).then((value) {
-        /*Navigator.push( context,
+    _prefs.setString(FlagKey.USER, json.encode(userEntity.toJson())).then((value) {
+      Navigator.push( context,
             MaterialPageRoute(builder: (context) {
               return HomePage();
-            }));*/
-      });
+            }));
+    });
 
-    }
+
 
   }
 

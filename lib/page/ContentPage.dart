@@ -31,7 +31,7 @@ class _ContentPageState extends State<ContentPage> {
     Colors.orange,
   ];
 
-  PageController _pageController = PageController(viewportFraction: 0.9);
+  PageController _pageController = PageController(viewportFraction: 1.0);
 
   @override
   void initState() {
@@ -47,7 +47,10 @@ class _ContentPageState extends State<ContentPage> {
     return Column(
       children: <Widget>[
         //appbar
-        CustomAppbar(),
+        Visibility(
+          visible: false,
+          child: CustomAppbar(),
+        ),
         Expanded(
           //撑开高度
             child: PageView(

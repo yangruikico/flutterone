@@ -16,6 +16,9 @@ class BaseWidgetState extends State<BaseWidget> {
 
   @override
   Widget build(BuildContext context) {
+    pageState = true;
+    loading.weatherState = ViewState.loading;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(title),

@@ -49,22 +49,25 @@ class _HomePageState extends State<HomePage> {
                 height: 180,
                 alignment: Alignment.centerLeft,
                 color: Colors.transparent,
-                child: GestureDetector(
-                  child: Align(
-                    alignment: Alignment.centerRight,
+                child:Visibility(
+                  visible: false,
+                  child: GestureDetector(
+                    child: Align(
+                      alignment: Alignment.centerRight,
 
-                    child: Text(
-                      "进入",
-                      style: TextStyle(fontSize: 16),
+                      child: Text(
+                        "进入",
+                        style: TextStyle(fontSize: 16),
+                      ),
                     ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        new MaterialPageRoute(builder: (context) => AlignPage()),
+                      );
+                    },
                   ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      new MaterialPageRoute(builder: (context) => AlignPage()),
-                    );
-                  },
-                ))
+                ) )
           ],
         ),
       ),

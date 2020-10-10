@@ -1,3 +1,4 @@
+import 'package:TATO/tab/custom_appbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,17 @@ class BaseCardState extends State<BaseCard> {
 
   @override
   Widget build(BuildContext context) {
-    return PhysicalModel(
+    return Container(
+      color: Colors.transparent,
+      child: Column(
+        children: <Widget>[
+          CustomAppbar(),
+          topContent(),
+          bottomContent(),
+
+        ],
+      ),
+    ) /*PhysicalModel(
       color: Colors.transparent,
       borderRadius: BorderRadius.circular(6),
       clipBehavior: Clip.antiAlias,
@@ -20,13 +31,14 @@ class BaseCardState extends State<BaseCard> {
         decoration: BoxDecoration(color: Colors.white),
         child: Column(
           children: <Widget>[
+            CustomAppbar(),
             topContent(),
             bottomContent(),
 
           ],
         ),
       ),
-    );
+    )*/;
   }
 
   topContent() {
