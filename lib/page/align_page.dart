@@ -1,6 +1,8 @@
+import 'package:TATO/moudle/kmon.dart';
 import 'package:TATO/page/face_control.dart';
-import 'package:TATO/platform_channel.dart';
-import 'package:TATO/slide_verify_state.dart';
+import 'file:///D:/code/flutter_app/lib/page/platform_channel.dart';
+import 'file:///D:/code/flutter_app/lib/page/slide_verify_state.dart';
+import 'package:TATO/view/select/my_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +15,7 @@ import 'dart:convert';
 // 异步 Future
 import 'dart:async';
 
-import 'moudle/kmon.dart';
+import 'RoundSliderTrackShape.dart';
 
 class AlignPage extends StatefulWidget {
   @override
@@ -22,7 +24,7 @@ class AlignPage extends StatefulWidget {
 
 class _AlignPageState extends State<AlignPage> {
   static const platform = const MethodChannel('samples.flutter.io/battery');
-
+  double _sliderValue = 0;
   String _batteryLevel = 'Unknown battery level.';
 
   Future<Null> _getBatteryLevel() async {
@@ -40,9 +42,15 @@ class _AlignPageState extends State<AlignPage> {
     });
   }
 
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+    final  textStyle=TextStyle(
+        color: Colors.red
+    );
+    final iconList=DefaultTextStyle.merge(child: Container(),style:textStyle);
+
     return Scaffold(
       body: Container(
         color: Colors.white,
@@ -144,11 +152,47 @@ class _AlignPageState extends State<AlignPage> {
                     ],
                   ),
                   Container(
-                      color: Colors.grey,
+                      color: Colors.white,
                       margin: EdgeInsets.only(bottom: 10),
-                      child: SizedBox(
-                        width: 320,
-                        height: 1,
+                      child:SliderTheme(
+                        data: SliderTheme.of(context).copyWith(
+                            activeTrackColor: Colors.pink, //进度条滑块左边颜色
+                            inactiveTrackColor: Colors.blue, //进度条滑块右边颜色
+                            trackShape: RoundSliderTrackShape(radius: 10),//进度条形状,这边自定义两头显示圆角
+                            thumbColor: Colors.yellow, //滑块颜色
+                            overlayColor: Colors.green, //滑块拖拽时外圈的颜色
+                            overlayShape: RoundSliderOverlayShape(//可继承SliderComponentShape自定义形状
+                              overlayRadius: 25, //滑块外圈大小
+                            ),
+                            thumbShape: RoundSliderThumbShape(//可继承SliderComponentShape自定义形状
+                              disabledThumbRadius: 15, //禁用是滑块大小
+                              enabledThumbRadius: 15, //滑块大小
+                            ),
+                            inactiveTickMarkColor: Colors.black,
+                            tickMarkShape: RoundSliderTickMarkShape(//继承SliderTickMarkShape可自定义刻度形状
+                              tickMarkRadius: 4.0,//刻度大小
+                            ),
+                            showValueIndicator: ShowValueIndicator.onlyForDiscrete,//气泡显示的形式
+                            valueIndicatorColor: Colors.red,//气泡颜色
+                            valueIndicatorShape: PaddleSliderValueIndicatorShape(),//气泡形状
+                            valueIndicatorTextStyle: TextStyle(color: Colors.black),//气泡里值的风格
+                            trackHeight: 6 //进度条宽度
+
+                        ),
+                        child: MySlider(
+                          value: _sliderValue,
+                          onChanged: (v) {
+                            setState(() {
+                              _sliderValue = v;
+                            });
+                          },
+                          min: 0,
+                          max: 100,
+                          label: '$_sliderValue',
+                          divisions: 20,
+                          activeColor: Colors.orange,
+                          inactiveColor: Colors.blue,
+                        ),
                       )),
                   FractionallySizedBox(
                     widthFactor: 1,
@@ -159,9 +203,9 @@ class _AlignPageState extends State<AlignPage> {
                           //登录
                           Navigator.push(
                             context,
-                            new MaterialPageRoute(builder: (context) => FaceControl()),
+                            new MaterialPageRoute(
+                                builder: (context) => FaceControl()),
                           );
-
                         },
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(4)),
@@ -223,7 +267,12 @@ class _AlignPageState extends State<AlignPage> {
                   Expanded(flex: 1, child: Image.asset('images/qq.png')),
                   Expanded(
                     flex: 1,
-                    child: Image.asset('images/weichart.png'),
+                    child: InkWell(
+                      onTap: () {
+                        _getBatteryLevel();
+                      },
+                      child: Image.asset('images/weichart.png'),
+                    ),
                   ),
                   Expanded(
                     flex: 1,

@@ -64,9 +64,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
 }
 
 flutter {
 
     source '../..'
+}
+
+dependencies {
+
+    implementation(name: 'captcha-release_v3.0.0', ext: 'aar')
 }

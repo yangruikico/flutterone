@@ -5,11 +5,12 @@ import android.content.Context;
 import android.util.Log;
 
 
+import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.PluginRegistry;
 
-public class FlutterJniPlugin implements MethodChannel.MethodCallHandler {
+public class FlutterJniPlugin implements MethodChannel.MethodCallHandler  {
 
     public static final String CHANNEL = "FlutterJniPlugin";
     private Context context;
@@ -20,9 +21,9 @@ public class FlutterJniPlugin implements MethodChannel.MethodCallHandler {
         Log.e(CHANNEL, "FilesDir = " + activity.getFilesDir());
     }
 
-    public static void registerWith(PluginRegistry.Registrar registrar) {
-        MethodChannel channel = new MethodChannel(registrar.messenger(), CHANNEL);
-        FlutterJniPlugin flutterJniPlugin = new FlutterJniPlugin(registrar.activity());
+    public static void registerWith(BinaryMessenger registrar,Activity activity) {
+        MethodChannel channel = new MethodChannel(registrar, CHANNEL);
+        FlutterJniPlugin flutterJniPlugin = new FlutterJniPlugin(activity);
         channel.setMethodCallHandler(flutterJniPlugin);
     }
 

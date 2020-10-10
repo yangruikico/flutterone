@@ -3,8 +3,9 @@
 // found in the LICENSE file.
 import 'dart:convert';
 import 'dart:async';
-import 'package:TATO/animals_root.dart';
-import 'package:TATO/womai_channel.dart';
+import 'file:///D:/code/flutter_app/lib/page/animals_root.dart';
+
+import 'package:TATO/page/womai_channel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

@@ -22,6 +22,7 @@ class BaseCardState extends State<BaseCard> {
           children: <Widget>[
             topContent(),
             bottomContent(),
+
           ],
         ),
       ),

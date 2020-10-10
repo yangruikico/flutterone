@@ -27,7 +27,16 @@ class _FaceControlState extends State<FaceControl> {
   List<FaceLabel> tabLabel = [
     FaceLabel()
       ..labelName = '全部'
-      ..isCheck = false
+      ..isCheck = false,
+    FaceLabel()
+      ..labelName = '重点人员'
+      ..isCheck = false,
+    FaceLabel()
+      ..labelName = '重点车辆'
+      ..isCheck = false,
+    FaceLabel()
+      ..labelName = '重点场所'
+      ..isCheck = false,
   ];
 
   @override
@@ -127,20 +136,21 @@ class _FaceControlState extends State<FaceControl> {
                 offset: Offset(0, 200),
                 child: Icon(Icons.sort),
                 window: Container(
-                  padding:
-                      EdgeInsets.only(left: 10, right: 10, top: 20, bottom: 20),
+                  padding: EdgeInsets.only(left: 10, right: 10),
                   color: Color.fromARGB(10, 146, 147, 151),
-                  height: 80,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    mainAxisSize: MainAxisSize.max,
-                    //交叉轴的布局方式，对于column来说就是水平方向的布局方式
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    //就是字child的垂直布局方向，向上还是向下
-                    verticalDirection: VerticalDirection.down,
-                    children: tabLabel.map((item) {
-                      return _item(item);
-                    }).toList(),
+                  height: 100,
+                  child: GridView.builder(
+                    itemCount: tabLabel.length, //列表长度，
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 4, //交叉轴 子Widget的个数
+                        crossAxisSpacing: 1, //交叉轴  分割线宽度
+                        mainAxisSpacing: 1, //主轴 分割线宽度
+                        childAspectRatio: 3 //item的宽高比
+
+                        ),
+                    itemBuilder: (BuildContext context, int index) {
+                      return _item(tabLabel[index]);
+                    },
                   ),
                 ),
               ),
@@ -242,28 +252,30 @@ class _FaceControlState extends State<FaceControl> {
   }
 }
 
+
 Widget _item(FaceLabel item) {
   return Container(
-    child: Expanded(
-      flex: 1,
-      child: Padding(
-        padding: EdgeInsets.only(left: 5, right: 5),
-        child: Container(
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-              color: Colors.white,
-              shape: BoxShape.rectangle,
-              border: Border.all(color: Colors.blue, width: 1.0),
-              borderRadius: BorderRadius.circular(4)),
-          child: Text(
-            '全部',
-            style: TextStyle(color: Colors.blue),
-          ),
+    child: Padding(
+      padding: EdgeInsets.only(left: 5, right: 5),
+      child: Container(
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            color: Colors.white,
+            shape: BoxShape.rectangle,
+            border: Border.all(color: Colors.blue, width: 1.0),
+            borderRadius: BorderRadius.circular(4)),
+        child: Text(
+          item.labelName,
+          style: TextStyle(color: Colors.blue),
         ),
       ),
     ),
   );
 }
+
+
+
+
 
 _statusBar() {
   SystemUiOverlayStyle uiOverlayStyle = SystemUiOverlayStyle(

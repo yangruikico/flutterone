@@ -1,13 +1,13 @@
-import 'package:TATO/card_recommend.dart';
+import 'card_free.dart';
+import 'card_share.dart';
+import 'card_special.dart';
+import 'file:///D:/code/flutter_app/lib/page/card_recommend.dart';
 import 'package:TATO/tab/custom_appbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'card_free.dart';
-import 'card_share.dart';
-import 'card_special.dart';
-import 'list_page.dart';
+
 
 class ContentPage extends StatefulWidget {
   final ValueChanged<int> onPageChange;

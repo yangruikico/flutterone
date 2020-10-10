@@ -6,11 +6,16 @@ import android.content.IntentFilter;
 import android.os.BatteryManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.netease.nis.captcha.Captcha;
+import com.netease.nis.captcha.CaptchaConfiguration;
+import com.netease.nis.captcha.CaptchaListener;
 
 import java.util.Objects;
 
@@ -19,6 +24,7 @@ import io.flutter.plugin.common.EventChannel;
 import io.flutter.plugin.common.MethodCall;
 
 import io.flutter.plugin.common.MethodChannel;
+import io.flutter.plugin.common.PluginRegistry;
 import io.flutter.plugins.GeneratedPluginRegistrant;
 
 
@@ -45,7 +51,9 @@ public class MainActivity extends FlutterActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initData();
 
+        FlutterJniPlugin.registerWith(getFlutterEngine().getDartExecutor().getBinaryMessenger(),this);//(getFlutterEngine().getDartExecutor().getBinaryMessenger()
 
         GeneratedPluginRegistrant.registerWith(Objects.requireNonNull(getFlutterEngine()));
 
@@ -64,64 +72,36 @@ public class MainActivity extends FlutterActivity {
                                 result.error("UNAVAILABLE", "Battery level not available.", null);
                             }
 
-
-
-                            methodChannel.invokeMethod("getData", "123466789", new MethodChannel.Result() {
-                                public void success(@Nullable Object o) {
-                                    Log.e("yangrui", "success="+o);
-                                }
-
-                                @Override
-                                public void error(String s, @Nullable String s1, @Nullable Object o) {
-                                    Log.e("yangrui", "error="+s);
-                                }
-
-                                @Override
-                                public void notImplemented() {
-                                    Log.e("yangrui", "notImplemented");
-                                }
-                            });
-
+                            test1();//调用 图像
                         } else {
                             result.notImplemented();
                         }
                     }
                 });
 
-
-
-
-
-
-
         native2Dart();
         responseDart();
 
+    }
 
+    private String captchaUrl, controlBarStartUrl, controlBarMovingUrl, controlBarErrorUrl;
 
+    String traditionalCaptchaId = "deecf3951a614b71b4b1502c072be1c1";
+    private CaptchaConfiguration.LangType langType = CaptchaConfiguration.LangType.LANG_ZH_CN;
 
-
-      /*  MethodChannel methodChannel = new MethodChannel(getFlutterEngine().getDartExecutor().getBinaryMessenger(), METHOD_CHANNELNTF);
-
-
-        methodChannel.invokeMethod("getData", "123466789", new MethodChannel.Result() {
-            public void success(@Nullable Object o) {
-                Log.e("yangrui", "success="+o);
-            }
-
-            @Override
-            public void error(String s, @Nullable String s1, @Nullable Object o) {
-                Log.e("yangrui", "error="+s);
-            }
-
-            @Override
-            public void notImplemented() {
-                Log.e("yangrui", "notImplemented");
-            }
-        });
-*/
-
-
+    private void test1() {
+        final CaptchaConfiguration configuration = new CaptchaConfiguration.Builder()
+                .captchaId(traditionalCaptchaId)
+                .url(captchaUrl) // 接入者无需设置，该接口为调试接口
+                .listener(captchaListener)
+                .languageType(langType)
+                .debug(true)
+                .position(-1, -1, 0, 0)
+                .controlBarImageUrl(controlBarStartUrl, controlBarMovingUrl, controlBarErrorUrl)
+                .backgroundDimAmount( 0.5f)
+                .build(MainActivity.this);
+        final Captcha captcha = Captcha.getInstance().init(configuration);
+        captcha.validate();
     }
 
     @Override
@@ -201,6 +181,37 @@ public class MainActivity extends FlutterActivity {
                 }
             }
         });
+    }
+
+
+    private CaptchaListener captchaListener;
+
+    private void initData() {
+        captchaListener = new CaptchaListener() {
+            @Override
+            public void onReady() {
+
+            }
+
+            @Override
+            public void onValidate(String result, String validate, String msg) {
+                if (!TextUtils.isEmpty(validate)) {
+                    Toast.makeText(getApplicationContext(), "验证成功", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "验证失败", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onError(String msg) {
+                Toast.makeText(getApplicationContext(), "验证出错" + msg, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+        };
     }
 }
 
