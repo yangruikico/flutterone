@@ -9,7 +9,7 @@ class CustomAppbar extends StatelessWidget {
     double paddingTop=MediaQuery.of(context).padding.top;
     
     return Container(
-      margin: EdgeInsets.fromLTRB(20,paddingTop+10,20,5),
+      margin: EdgeInsets.fromLTRB(1,paddingTop+10,1,30),
       padding: EdgeInsets.fromLTRB(20, 7, 20, 7),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),

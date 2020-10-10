@@ -18,9 +18,17 @@ class BaseCardState extends State<BaseCard> {
       child: Column(
         children: <Widget>[
           CustomAppbar(),
-          topContent(),
-          bottomContent(),
-
+          Expanded(
+            child: Container(
+              color: Colors.white,
+              child: Column(
+                children: <Widget>[
+                  topContent(),
+                  bottomContent(),
+                ],
+              ),
+            ),
+          )
         ],
       ),
     ) /*PhysicalModel(
@@ -38,7 +46,8 @@ class BaseCardState extends State<BaseCard> {
           ],
         ),
       ),
-    )*/;
+    )*/
+        ;
   }
 
   topContent() {
@@ -49,7 +58,7 @@ class BaseCardState extends State<BaseCard> {
         children: <Widget>[
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
-            children: <Widget>[topTitle(''),topTitle2()],
+            children: <Widget>[topTitle(''), topTitle2()],
           ),
           subTitle(''),
         ],
@@ -82,14 +91,14 @@ class BaseCardState extends State<BaseCard> {
     return Container();
   }
 
-  bottomTitle(String title){
+  bottomTitle(String title) {
     return Text(
-      title,textAlign: TextAlign.center,style: TextStyle(
-        fontSize: 12,color:bottomTitleColor,
-
-    ),
+      title,
+      textAlign: TextAlign.center,
+      style: TextStyle(
+        fontSize: 12,
+        color: bottomTitleColor,
+      ),
     );
-
   }
-
 }
