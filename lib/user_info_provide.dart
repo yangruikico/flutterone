@@ -1,5 +1,12 @@
+import 'dart:convert';
+
 import 'package:TATO/moudle/entity/user_entity.dart';
+import 'package:TATO/page/home.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'config/flag_key.dart';
 
 class UserInfoProvide with ChangeNotifier {
 
@@ -7,7 +14,7 @@ class UserInfoProvide with ChangeNotifier {
 
 
 
-  updateUserInfo({String username, String password}) {
+  updateUserInfo ({String username, String password}) async{
     if (userEntity == null) {
       userEntity = UserEntity();
     }

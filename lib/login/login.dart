@@ -37,7 +37,6 @@ class _BodyState extends BaseWidgetState {
 
     super.dispose();
   }
-
   void _submit() async{
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
@@ -50,14 +49,8 @@ class _BodyState extends BaseWidgetState {
           onSuccess: (UserEntity userEntity) {},
           onFailed: (NoticeEntity noticeEntity) {});*/
 
-
       saveUser(UserEntity(username: _form.username, password: _form.password));
-
-
     }
-
-
-
 
     /* showModalBottomSheet(
        context: context,
@@ -69,9 +62,7 @@ class _BodyState extends BaseWidgetState {
        });*/
   }
 
-
   Future<void>  saveUser(UserEntity userEntity) async {
-
     SharedPreferences _prefs = await SharedPreferences.getInstance();
 
     Provider.of<UserInfoProvide>(context,listen: false).updateUserInfo(username: _form.username, password: _form.password.toString());
@@ -85,10 +76,7 @@ class _BodyState extends BaseWidgetState {
             }));
     });
 
-
-
   }
-
 
   @override
   body() {

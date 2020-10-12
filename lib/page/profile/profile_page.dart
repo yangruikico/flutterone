@@ -1,12 +1,10 @@
 import 'dart:convert';
-
 import 'package:TATO/config/flag_key.dart';
 import 'package:TATO/moudle/entity/user_entity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../user_info_provide.dart';
 import '../text_input.dart';
 
@@ -29,11 +27,6 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           body: _Body(userEntity: context.watch<UserInfoProvide>().userEntity),
         ));
-    //Container(
-    //           child: Text(
-    //             '${context.watch<UserInfoProvide>().userEntity.username}'
-    //           ),
-    //         )
   }
 }
 
@@ -62,29 +55,25 @@ class _BodyState extends State<_Body> {
                 children: <Widget>[
                   ListTile(
                     onTap: () {
-
-                      Navigator.of(context).push(
-
-                          MaterialPageRoute(
-                            builder: (context) => TextInputPage(
-                              title: '设置用户名',
-                              hintText: '2-20 个中英文字符',
-                              initialValue: userEntity.username,
-                              validator: (value) {
-                                if (value.length < 2 || value.length > 20) {
-                                  return '长度不符合要求';
-                                }
-                                return null;
-                              },
-                              onSubmit: (value, context) => _modifyUser(
-                                  UserEntity(username: value), context),
-                            ),
-                          )
-                      );
-
-
-
-
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => TextInputPage(
+                          title: '设置用户名',
+                          hintText: '2-20 个中英文字符',
+                          initialValue: userEntity.username,
+                          validator: (value) {
+                            if (value.length < 2 || value.length > 20) {
+                              return '长度不符合要求';
+                            }
+                            return null;
+                          },
+                          onSubmit: (
+                                  {String value,
+                                  Function() onSuccess,
+                                  Function() onFailed}) =>
+                              _modifyUser(UserEntity(username: value),
+                                  onSuccess, onFailed),
+                        ),
+                      ));
                     },
                     contentPadding: EdgeInsets.symmetric(horizontal: 10),
                     title: Text(
@@ -130,27 +119,22 @@ class _BodyState extends State<_Body> {
     );
   }
 
+  void _modifyUser(
+      UserEntity form, Function() onSuccess, Function() onFailed) async {
+    try {
+      SharedPreferences _prefs = await SharedPreferences.getInstance();
 
-  void _modifyUser(UserEntity form, BuildContext context) async {
-    saveUser(form);
+      Provider.of<UserInfoProvide>(context, listen: false)//context.watch<UserInfoProvide>()
+        .updateUserInfo(
+            username: form.username, password: form.password.toString());
+      _prefs
+          .setString(FlagKey.USER, json.encode(userEntity.toJson()))
+          .then((value) {
+        onSuccess();
+      });
+    } catch (e) {
+      print(e);
+      onFailed();
+    }
   }
-
-  Future<void>  saveUser(UserEntity userEntity) async {
-    SharedPreferences _prefs = await SharedPreferences.getInstance();
-
-    Provider.of<UserInfoProvide>(context,listen: false).updateUserInfo(username: userEntity.username, password: userEntity.password.toString());
-
-    _prefs.setBool(FlagKey.ISLOGIN, true);
-
-    _prefs.setString(FlagKey.USER, json.encode(userEntity.toJson())).then((value) {
-
-
-
-    });
-
-
-
-  }
-
-
 }

@@ -11,7 +11,8 @@ class TextInputPage extends StatelessWidget {
   final int maxLines;
   final bool obscureText;
   final FormFieldValidator<String> validator;
-  final void Function(String value, BuildContext context) onSubmit;
+  final void Function({String value, Function() onSuccess, Function() onFailed})
+      onSubmit;
 
   TextInputPage({
     this.title = '',
@@ -60,7 +61,8 @@ class _Body extends StatefulWidget {
   final int maxLines;
   final bool obscureText;
   final FormFieldValidator<String> validator;
-  final void Function(String value, BuildContext context) onSubmit;
+  final void Function({String value, Function() onSuccess, Function() onFailed})
+      onSubmit;
 
   _Body({
     Key key,
@@ -98,7 +100,18 @@ class _BodyState extends State<_Body> {
   void _submit() {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-      widget.onSubmit(_value, context);
+      widget.onSubmit(
+          value: _value,
+          onSuccess: () {
+            Navigator.of(context).pop();
+          },
+          onFailed: () {
+            Scaffold.of(context).showSnackBar(SnackBar(
+              backgroundColor: Colors.cyanAccent,
+              content: Text('提交失败'),
+              duration: Duration(seconds: 1),
+            ));
+          });
     }
   }
 
