@@ -14,120 +14,16 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Provider<UserInfoProvide>(
-        create: (_) => UserInfoProvide(),
-        dispose: (context, value) => value.dispose(),
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text('profile information'),
-            centerTitle: true,
-            leading: Text(""),
-          ),
-          body: _Body(userEntity: context.watch<UserInfoProvide>().userEntity),
-        ));
-  }
-}
-
-class _Body extends StatefulWidget {
-   UserEntity userEntity;
-
-  _Body({Key key, @required this.userEntity}) : super(key: key);
-
-  @override
-  _BodyState createState() => _BodyState(userEntity);
-}
-
-class _BodyState extends State<_Body> {
-  UserEntity userEntity;
-
-  _BodyState(this.userEntity);
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        Column(
-          children: <Widget>[
-            Card(
-              child: Column(
-                children: <Widget>[
-                  ListTile(
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => TextInputPage(
-                          title: '设置用户名',
-                          hintText: '2-20 个中英文字符',
-                          initialValue: userEntity.username,
-                          validator: (value) {
-                            if (value.length < 2 || value.length > 20) {
-                              return '长度不符合要求';
-                            }
-                            return null;
-                          },
-                          onSubmit: (
-                                  {String value,
-                                  Function() onSuccess,
-                                  Function() onFailed}) =>
-                              _modifyUser(UserEntity(username: value),
-                                  onSuccess, onFailed),
-                        ),
-                      ));
-                    },
-                    contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                    title: Text(
-                      '用户名',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Text(
-                          '${userEntity.username}',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                        Icon(Icons.keyboard_arrow_right)
-                      ],
-                    ),
-                  ),
-                  Divider(height: 1),
-                  ListTile(
-                    onTap: () {},
-                    contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                    title: Text(
-                      '密码',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Text(
-                          '${userEntity.password}',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                        Icon(Icons.keyboard_arrow_right)
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            )
-          ],
-        )
-      ],
-    );
-  }
-
   void _modifyUser(
       UserEntity form, Function() onSuccess, Function() onFailed) async {
     try {
       SharedPreferences _prefs = await SharedPreferences.getInstance();
-      context.read<UserInfoProvide>().updateUserInfo(
+      Provider.of<UserInfoProvide>(context, listen: false).updateUserInfo(
           username: form.username, password: form.password.toString());
 
       _prefs
-          .setString(FlagKey.USER, json.encode(context.read<UserInfoProvide>().userEntity.toJson()))
+          .setString(FlagKey.USER,
+              json.encode(context.read<UserInfoProvide>().userEntity.toJson()))
           .then((value) {
         onSuccess();
       });
@@ -135,5 +31,96 @@ class _BodyState extends State<_Body> {
       print(e);
       onFailed();
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider<UserInfoProvide>.value(
+      value: Provider.of<UserInfoProvide>(context, listen: false),
+      child: Consumer<UserInfoProvide>(
+        builder: (BuildContext context, UserInfoProvide mUserInfoProvide,
+            Widget child) {
+          return Scaffold(
+            appBar: AppBar(
+              title: Text('个人资料'),
+            ),
+            body: Stack(
+              children: <Widget>[
+                Column(
+                  children: <Widget>[
+                    Card(
+                      child: Column(
+                        children: <Widget>[
+                          ListTile(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => TextInputPage(
+                                  title: '设置用户名',
+                                  hintText: '2-20 个中英文字符',
+                                  initialValue:
+                                      mUserInfoProvide.userEntity.username,
+                                  validator: (value) {
+                                    if (value.length < 2 || value.length > 20) {
+                                      return '长度不符合要求';
+                                    }
+                                    return null;
+                                  },
+                                  onSubmit: (
+                                          {String value,
+                                          Function() onSuccess,
+                                          Function() onFailed}) =>
+                                      _modifyUser(UserEntity(username: value),
+                                          onSuccess, onFailed),
+                                ),
+                              ));
+                            },
+                            contentPadding:
+                                EdgeInsets.symmetric(horizontal: 10),
+                            title: Text(
+                              '用户名',
+                              style: TextStyle(fontSize: 18),
+                            ),
+                            trailing: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Text(
+                                  '${mUserInfoProvide.userEntity.username}',
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                                Icon(Icons.keyboard_arrow_right)
+                              ],
+                            ),
+                          ),
+                          Divider(height: 1),
+                          ListTile(
+                            onTap: () {},
+                            contentPadding:
+                                EdgeInsets.symmetric(horizontal: 10),
+                            title: Text(
+                              '密码',
+                              style: TextStyle(fontSize: 18),
+                            ),
+                            trailing: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Text(
+                                  '${mUserInfoProvide.userEntity.password}',
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                                Icon(Icons.keyboard_arrow_right)
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
+          );
+        },
+      ),
+    );
   }
 }

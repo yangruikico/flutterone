@@ -4,9 +4,6 @@ import 'package:TATO/moudle/entity/user_entity.dart';
 import 'package:TATO/page/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import 'config/flag_key.dart';
 
 class UserInfoProvide with ChangeNotifier {
 
