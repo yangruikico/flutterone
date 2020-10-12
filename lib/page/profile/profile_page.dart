@@ -21,6 +21,8 @@ class _ProfilePageState extends State<ProfilePage> {
       Provider.of<UserInfoProvide>(context, listen: false).updateUserInfo(
           username: form.username, password: form.password.toString());
 
+      print("yangrui${context.read<UserInfoProvide>().userEntity.toJson()}");
+
       _prefs
           .setString(FlagKey.USER,
               json.encode(context.read<UserInfoProvide>().userEntity.toJson()))
@@ -93,7 +95,28 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                           Divider(height: 1),
                           ListTile(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => TextInputPage(
+                                  title: '设置密码',
+                                  hintText: '2-20 个中英文字符',
+                                  initialValue:
+                                  mUserInfoProvide.userEntity.password,
+                                  validator: (value) {
+                                    if (value.length < 2 || value.length > 20) {
+                                      return '长度不符合要求';
+                                    }
+                                    return null;
+                                  },
+                                  onSubmit: (
+                                      {String value,
+                                        Function() onSuccess,
+                                        Function() onFailed}) =>
+                                      _modifyUser(UserEntity(password: value),
+                                          onSuccess, onFailed),
+                                ),
+                              ));
+                            },
                             contentPadding:
                                 EdgeInsets.symmetric(horizontal: 10),
                             title: Text(

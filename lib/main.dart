@@ -23,7 +23,7 @@ import 'moudle/entity/user_entity.dart';
 main() {
   Provider.debugCheckInvalidValueType = null;
   runApp(ChangeNotifierProvider<UserInfoProvide>.value(
-    value: UserInfoProvide(),
+    value: UserInfoProvide(UserEntity()),
     child: MyApp(),
   ));
 }
@@ -148,6 +148,7 @@ class _MyHomePageState extends State<MyHomePage> {
       UserEntity mUserEntity=UserEntity.fromMap(json.decode(user));
       Provider.of<UserInfoProvide>(context, listen: false).userEntity = mUserEntity;
       print("yangrui::${mUserEntity.username}");
+      print("yangrui::${mUserEntity.password}");
     }
 
 

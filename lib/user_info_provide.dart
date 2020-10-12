@@ -6,20 +6,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class UserInfoProvide with ChangeNotifier {
-
   UserEntity userEntity;
 
+  UserInfoProvide(this.userEntity);
 
-
-  updateUserInfo ({String username, String password}) async{
-    if (userEntity == null) {
-      userEntity = UserEntity();
-    }
+  updateUserInfo({String username, String password}) async {
+    print("yangrui${username.isNotEmpty}");
     if (username.isNotEmpty) {
       userEntity.username = username;
     }
-
-    if (username.isNotEmpty) {
+    print("yangrui${password.isNotEmpty}");
+    if (password.isNotEmpty && password != "null") {
       userEntity.password = password;
     }
     notifyListeners();
