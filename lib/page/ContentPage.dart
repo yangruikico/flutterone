@@ -1,9 +1,9 @@
 import 'package:TATO/page/profile/profile_page.dart';
 
 import 'card_free.dart';
+import 'card_recommend.dart';
 import 'card_share.dart';
 import 'card_special.dart';
-import 'file:///D:/code/flutter_app/lib/page/card_recommend.dart';
 import 'package:TATO/tab/custom_appbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

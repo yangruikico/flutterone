@@ -1,7 +1,5 @@
 import 'package:TATO/moudle/kmon.dart';
 import 'package:TATO/page/face_control.dart';
-import 'file:///D:/code/flutter_app/lib/page/platform_channel.dart';
-import 'file:///D:/code/flutter_app/lib/page/slide_verify_state.dart';
 import 'package:TATO/view/select/my_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

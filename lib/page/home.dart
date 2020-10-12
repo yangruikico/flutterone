@@ -1,8 +1,8 @@
-import 'file:///D:/code/flutter_app/lib/page/ContentPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
+import 'ContentPage.dart';
 import 'align_page.dart';
 
 class HomePage extends StatefulWidget {
