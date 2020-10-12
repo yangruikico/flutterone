@@ -11,14 +11,8 @@ class UserInfoProvide with ChangeNotifier {
   UserInfoProvide(this.userEntity);
 
   updateUserInfo({String username, String password}) async {
-    print("yangrui${username.isNotEmpty}");
-    if (username.isNotEmpty) {
-      userEntity.username = username;
-    }
-    print("yangrui${password.isNotEmpty}");
-    if (password.isNotEmpty && password != "null") {
-      userEntity.password = password;
-    }
+    userEntity.username = username ?? userEntity.username;
+    userEntity.password = password ?? userEntity.password;
     notifyListeners();
   }
 

@@ -20,7 +20,7 @@ import 'moudle/entity/user_entity.dart';
 
 }*/
 
-main() {
+void main() {
   Provider.debugCheckInvalidValueType = null;
   runApp(ChangeNotifierProvider<UserInfoProvide>.value(
     value: UserInfoProvide(UserEntity()),

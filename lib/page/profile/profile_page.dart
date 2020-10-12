@@ -19,7 +19,7 @@ class _ProfilePageState extends State<ProfilePage> {
     try {
       SharedPreferences _prefs = await SharedPreferences.getInstance();
       Provider.of<UserInfoProvide>(context, listen: false).updateUserInfo(
-          username: form.username, password: form.password.toString());
+          username: form.username, password: form.password);
 
       print("yangrui${context.read<UserInfoProvide>().userEntity.toJson()}");
 

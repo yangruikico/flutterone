@@ -65,7 +65,7 @@ class _BodyState extends BaseWidgetState {
   Future<void>  saveUser(UserEntity userEntity) async {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
 
-    Provider.of<UserInfoProvide>(context,listen: false).updateUserInfo(username: _form.username, password: _form.password.toString());
+    Provider.of<UserInfoProvide>(context,listen: false).updateUserInfo(username: _form.username, password: _form.password);
 
     _prefs.setBool(FlagKey.ISLOGIN, true);
 
