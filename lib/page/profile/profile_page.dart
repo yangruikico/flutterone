@@ -31,7 +31,7 @@ class _ProfilePageState extends State<ProfilePage> {
 }
 
 class _Body extends StatefulWidget {
-  final UserEntity userEntity;
+   UserEntity userEntity;
 
   _Body({Key key, @required this.userEntity}) : super(key: key);
 
@@ -123,12 +123,11 @@ class _BodyState extends State<_Body> {
       UserEntity form, Function() onSuccess, Function() onFailed) async {
     try {
       SharedPreferences _prefs = await SharedPreferences.getInstance();
+      context.read<UserInfoProvide>().updateUserInfo(
+          username: form.username, password: form.password.toString());
 
-      Provider.of<UserInfoProvide>(context, listen: false)//context.watch<UserInfoProvide>()
-        .updateUserInfo(
-            username: form.username, password: form.password.toString());
       _prefs
-          .setString(FlagKey.USER, json.encode(userEntity.toJson()))
+          .setString(FlagKey.USER, json.encode(context.read<UserInfoProvide>().userEntity.toJson()))
           .then((value) {
         onSuccess();
       });

@@ -103,7 +103,15 @@ class _BodyState extends State<_Body> {
       widget.onSubmit(
           value: _value,
           onSuccess: () {
-            Navigator.of(context).pop();
+            Scaffold.of(context).showSnackBar(SnackBar(
+              backgroundColor: Colors.red,
+              content: Text('成功'),
+              duration: Duration(seconds: 1),
+            ));
+         Future.delayed(Duration(seconds: 2),(){
+           Navigator.of(context).pop();
+         });
+
           },
           onFailed: () {
             Scaffold.of(context).showSnackBar(SnackBar(
