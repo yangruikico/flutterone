@@ -85,9 +85,11 @@ class _MyHomePageState extends State<MyHomePage> {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
     var bool = _prefs.getBool(FlagKey.ISLOGIN);
     if (bool!=null&&bool) {//bool!=null&&bool
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return HomePage();
-      }));
+      Navigator.pushAndRemoveUntil(
+        context,
+        new MaterialPageRoute(builder: (context) => new HomePage()),
+            (route) => route == null,
+      );
     } else {
 
       Navigator.pushAndRemoveUntil(

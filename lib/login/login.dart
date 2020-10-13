@@ -70,10 +70,11 @@ class _BodyState extends BaseWidgetState {
     _prefs.setBool(FlagKey.ISLOGIN, true);
 
     _prefs.setString(FlagKey.USER, json.encode(userEntity.toJson())).then((value) {
-      Navigator.push( context,
-            MaterialPageRoute(builder: (context) {
-              return HomePage();
-            }));
+      Navigator.pushAndRemoveUntil(
+        context,
+        new MaterialPageRoute(builder: (context) => new HomePage()),
+            (route) => route == null,
+      );
     });
 
   }

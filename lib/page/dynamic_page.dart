@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:TATO/moudle/entity/post.dart';
+import 'package:TATO/moudle/entity/user_entity.dart';
+import 'package:TATO/page/publish.dart';
 import 'package:TATO/view/widget/post_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -26,20 +28,17 @@ class _DynamicPageState extends State<DynamicPage> {
   void initState() {
     super.initState();
     Future.delayed(Duration(seconds: 3), () {
-      _loadLikedPosts();
+      //_loadLikedPosts();
     });
   }
 
   void _loadLikedPosts() async {
-    print("yangrui1111");
-
-    final posts = await postLiked(userId: 111, limit: 10, offset: 10);
-    print("yangrui${posts.toString()}");
-    setState(() {
-      _likedPosts.addAll(posts);
-    });
-
-    print("yangrui2222");
+    for (int i = 0; i < 10; i++) {
+      PostEntity postEntity = PostEntity();
+      postEntity.user = UserEntity();
+      _likedPosts.add(postEntity);
+    }
+    setState(() {});
   }
 
   @override
@@ -48,15 +47,26 @@ class _DynamicPageState extends State<DynamicPage> {
       appBar: AppBar(
         title: Text('动态'),
         actions: <Widget>[
-          IconButton(
-            icon: Container(
-              width: 40,
-              height: 40,
-              child: Image.asset('images/hb_copy.png'),
+          Container(
+            color: Colors.red,
+            padding: EdgeInsets.only(right: 20),
+            margin: EdgeInsets.only(right: 2),
+            child: IconButton(
+              icon: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    '发布',
+                    style: TextStyle(fontSize: 14),
+                  )
+                ],
+              ),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return PublishPage();
+                }));
+              },
             ),
-            onPressed: () {
-              _loadLikedPosts();
-            },
           )
         ],
       ),
@@ -65,9 +75,9 @@ class _DynamicPageState extends State<DynamicPage> {
         child: ListView.builder(
           itemCount: _likedPosts.length,
           itemBuilder: (context, index) => PostTile(
-            key: ValueKey(1111),
+            key: ValueKey(_likedPosts[index].id),
             //_likedPosts[index].id
-            post: PostEntity(),
+            post: _likedPosts[index],
             //_likedPosts[index]
             onLike: () => setState(() {
               _likedPosts[index] = _likedPosts[index].copyWith(liked: true);
@@ -99,23 +109,23 @@ class _DynamicPageState extends State<DynamicPage> {
         milliseconds: 500 + _random.nextInt(500),
       ),
       () {
-        userId = 111;
+        userId = 1;
         final likedPostIds = _likedPostIds[userId] ?? [];
-
+        print("yangrui333");
         final posts = likedPostIds.skip(offset).take(limit).map((v) {
           final post = Map<String, dynamic>.from(
-              _posts[_posts.keys.elementAt(_random.nextInt(_posts.length))]);
+              _posts[_posts.keys.elementAt(_random.nextInt(10))]);
           post['id'] = v;
           return post;
         }).toList();
-
+        print("yangrui4444");
         if (_userId != null) {
           final likedPostIds = _likedPostIds[_userId] ?? [];
           posts.forEach((post) {
             post['liked'] = likedPostIds.contains(post['id']);
           });
         }
-
+        print("yangrui${posts.length}");
         return {'posts': posts};
       },
     );

@@ -26,7 +26,7 @@ class PostEntity  {
   final int videoId;
   final DateTime createdAt;
   final DateTime updatedAt;
-  final UserEntity user;
+   UserEntity user;
   final List<FileEntity> images;
   final FileEntity video;
   final PostStatEntity stat;
@@ -62,11 +62,11 @@ class PostEntity  {
           stat: stat ?? this.stat,
           liked: liked ?? this.liked);
 
-  const PostEntity({
-    this.id,
-    this.userId,
-    this.type,
-    this.text,
+   PostEntity({
+    this.id=1,
+    this.userId=1,
+    this.type=PostType.TEXT,
+    this.text='文本内容',
     this.imageIds,
     this.videoId,
     this.createdAt,

@@ -100,7 +100,7 @@ class _PostTileState extends State<PostTile> {
             ),
           ),
           Text(
-            widget.post.createdAt.toString().substring(0, 16),
+            "widget.post.createdAt.toString().substring(0, 16)",
             style: Theme.of(context)
                 .textTheme
                 .body1
@@ -234,8 +234,8 @@ class _PostTileState extends State<PostTile> {
           _buildHeader(context),
           Divider(height: 1),
           if (widget.post.text != '') _buildText(context),
-          if (widget.post.images.isNotEmpty) _buildImages(context),
-          if (widget.post.video != null) _buildVideo(context),
+          /*if (widget.post.images.isNotEmpty) _buildImages(context),
+          if (widget.post.video != null) _buildVideo(context),*/
           Divider(height: 1),
           _buildFooter(context),
         ],
