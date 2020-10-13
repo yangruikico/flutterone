@@ -84,7 +84,8 @@ class _HomePageState extends State<HomePage> {
           _bottomItem('本周', Icons.folder, 0),
           _bottomItem('分享', Icons.explore, 1),
           _bottomItem('免费', Icons.donut_small, 2),
-          _bottomItem('我的', Icons.person, 3),
+          _bottomItem('动态', Icons.explore, 3),
+          _bottomItem('我的', Icons.person, 4),
         ],
       ),
     );

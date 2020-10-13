@@ -1,3 +1,4 @@
+import 'package:TATO/page/dynamic_page.dart';
 import 'package:TATO/page/profile/profile_page.dart';
 
 import 'card_free.dart';
@@ -67,6 +68,7 @@ class _ContentPageState extends State<ContentPage> {
                   padding: EdgeInsets.only(left: 15,top: 20,right: 15,bottom: 20),
                   child: CardFree(),
                 )),
+                _warpItem(DynamicPage()),//ListPage(items: new List<String>.generate(100, (index) => "item$index") )
                 _warpItem(ProfilePage()),//ListPage(items: new List<String>.generate(100, (index) => "item$index") )
               ],
             )),
